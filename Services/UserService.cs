@@ -14,7 +14,7 @@ namespace EfCoreLearning.Services
         public async Task<ServiceResponse<UserDto>> CreateUser(CreateUserDto createUserDto)
         {
             var serviceResponse = new ServiceResponse<UserDto>();
-            if(createUserDto == null)
+            if(createUserDto.Id == 0)
             {
                 serviceResponse.responseMessage = "Empty User Body";
                 serviceResponse.statusCode = HttpStatusCode.BadRequest;

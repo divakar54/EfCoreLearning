@@ -3,12 +3,12 @@ using EfCoreLearning.DTO;
 using EfCoreLearning.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
 
 namespace EfCoreLearning.Controllers
 {
-    [ServiceFilter(typeof(EmptyBodyFilter))]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -20,8 +20,9 @@ namespace EfCoreLearning.Controllers
             _userService = userService;
         }
 
+        [AllowEmptyJsonBody]
         [HttpPost("createUser")]
-        public async Task<ActionResult<ServiceResponse<UserDto>>> CreateUser([FromBody(EmptyBodyBehavior = EmptyBodyBehavior.Allow)]CreateUserDto? createUserDto = null)
+        public async Task<ActionResult<ServiceResponse<UserDto>>> CreateUser([FromBody]CreateUserDto? createUserDto = null)
         {
             
             var userCreationResponse = await _userService.CreateUser(createUserDto);
